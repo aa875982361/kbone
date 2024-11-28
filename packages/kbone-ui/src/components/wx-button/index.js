@@ -59,7 +59,7 @@ export default class WxButton extends Hover {
 
     get openType() {
         // open-type 不支持
-        return null
+        return this.getAttribute('open-type')
     }
 
     get lang() {
@@ -120,9 +120,22 @@ export default class WxButton extends Hover {
         this._lock = true
         setTimeout(() => this._lock = false, 1000)
 
-        if (this.openType) {
+        if (this.openType === 'share') {
             // 不支持依赖微信客户端的 openType
-            console.error(`[wx-button] openType ${this.openType} 不支持`)
+            const pages = getCurrentPages()
+            const page = pages[pages.length - 1]
+            const shareData = page.onShareAppMessage && page.onShareAppMessage({from: 'button'})
+            if (wx.miniProgram && typeof wx.miniProgram.postMessage === 'function') {
+                wx.miniProgram.postMessage({
+                    data: {
+                        action: 'share',
+                        data: shareData || {}
+                    }
+                })
+            }
+            if (typeof window.shareMessageMask === 'function') {
+                window.shareMessageMask()
+            }
         }
     }
 }
