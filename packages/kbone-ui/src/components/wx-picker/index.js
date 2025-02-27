@@ -352,17 +352,24 @@ export default class WxPicker extends Base {
             this.pickerView.setAttribute('value', this.getLimitRegion(value))
         }
 
-        this._isPickerShow = true
+
         document.body.appendChild(this.dialog)
+        const onTransitionEnd = () => {
+            this.dialog.removeEventListener('transitionend', onTransitionEnd)
+            this._isPickerShow = true
+            this._isPickerShowInit = false
+            this._value = value
+        }
+        this.dialog.addEventListener('transitionend', onTransitionEnd)
         this.dialog.classList.replace('wx-picker-dialog-out', 'wx-picker-dialog-in')
-        this._isPickerShowInit = false
-        this._value = value
     }
 
     /**
      * 监听取消
      */
-    onCancel() {
+    onCancel(e) {
+        console.log('picker cancel e', e)
+        if (!this._isPickerShow) return
         this.hidePickerView()
         this.dispatchEvent(new CustomEvent('cancel', {bubbles: true, cancelable: true}))
     }
