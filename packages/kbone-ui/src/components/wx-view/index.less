@@ -1,7 +1,17 @@
 :host {
   display: block;
+  box-sizing: border-box;
 
   &([hidden]) {
     display: none;
   }
+}
+
+slot {
+  height: inherit;
+  width: inherit;
+}
+
+::slotted(*) {
+  box-sizing: border-box;
 }
