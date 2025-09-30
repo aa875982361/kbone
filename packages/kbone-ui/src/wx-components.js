@@ -7,6 +7,7 @@ import WxScrollView from './components/wx-scroll-view'
 import WxSwiper from './components/wx-swiper'
 import WxSwiperItem from './components/wx-swiper-item'
 import WxView from './components/wx-view/index'
+import WxVideo from './components/wx-video'
 import WxIcon from './components/wx-icon'
 import WxProgress from './components/wx-progress'
 import WxRichText from './components/wx-rich-text'
@@ -40,6 +41,7 @@ const COMPONENT_MAP = {
     'wx-swiper': WxSwiper,
     'wx-swiper-item': WxSwiperItem,
     'wx-view': WxView,
+    'wx-video': WxVideo,
     'wx-icon': WxIcon,
     'wx-progress': WxProgress,
     'wx-rich-text': WxRichText,
